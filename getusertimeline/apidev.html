@@ -1,0 +1,55 @@
+<html>
+<head>
+	
+<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css">
+	
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+<script type="text/javascript" src="jquery.jtwitter.js"></script>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	username = $('#username').val();
+    // Get latest 6 tweets by jQueryHowto
+    $.jTwitter(username, 10, function(data){
+        $('#posts').empty();
+        $.each(data.reverse(), function(i, post){
+        	tweet = '<div class="post" id="div_'+i+'" style="display:none;">'
+                +'<div class="alert-message warning">'
+                // See output-demo.js file for details
+                + '<img src="'
+                +	 post.user.profile_image_url
+                + '" ></img>'                
+                +    post.text
+                + '<a class="close" href="http://twitter.com/#!/tinychaos42/status/'
+                + post.id_str
+                + '">x</a>'
+                +'</div>'
+                +'</div>';
+            if(i==0)
+            {
+            	$('#posts').append(tweet);
+            }
+            else{
+            	q = i-1;
+            	$('#div_'+q).prepend(tweet);
+            }
+			//$('#posts').html =  $('#posts').append(tweet);
+           	//$('#posts').append(tweet);
+            setTimeout("$('#div_"+i+"').fadeIn('slow')", i*800);
+            
+        });
+    });
+});
+</script>
+
+</head>
+<body>
+	<!-- INSERT USERNAME HERE -->
+	<input type='hidden' id='username' value='tinychaos42'/>
+	<div class="container">
+		<h1>Zsolt's fekkin Tweets</h1>
+		<div id="posts">Getting your tweets...</div>
+	</div>
+</body>
+</html>
