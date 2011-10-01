@@ -3,7 +3,7 @@
 ### Set your Zend Framework, pear and php local path
 $oldpath = set_include_path('.:/home/agoston/pear/share/pear:/usr/local/zend/share/pear:/usr/share/php');
 ### Set your BlueviaClient.php path
-include_once "bluevia/src/BlueviaClient.php";
+include_once "../bluevia/src/BlueviaClient.php";
 
 class BUTESmsSender {
 
@@ -68,7 +68,7 @@ class BUTESmsSender {
 		} catch (Exception $e) {
 			print "<p>Error retreiving the SMS delivery status: ".$e->getMessage()."</p>";
 		}
-
+/*
 		// Get messages
 		try {
 			$received_messages = $sms->getMessages(SHORTCODE);
@@ -81,7 +81,7 @@ class BUTESmsSender {
 			print "<p>Error retrieving SMS".$e->getMessage()."</p>";
 		}
 
-		unset($sms);
+		unset($sms);*/
 	}
     }
 }
