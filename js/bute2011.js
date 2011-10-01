@@ -119,7 +119,7 @@ function objectToString(o){
 	{
 		//alert("displaying message");
 		numElements++;
-		var element = $('#referenceCharityBuzzTweet').clone();
+		var element = $('#referenceTweetMessage').clone();
 		element.attr("id","element_"+numElements);
 		var html = element.html().replace("{name}",message.name).replace("{amount}",message.amount).replace("{charityName}","Cancer Research UK").replace("{message}",message.message);
 		element.html(html);
