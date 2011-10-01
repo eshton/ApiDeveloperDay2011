@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Charity Cloud by team BUTE</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+	 <link href="css/jqModal.css" rel="stylesheet">
+	 <link href="css/bootstrap.css" rel="stylesheet">
+	 <script src="http://js.pusherapp.com/1.9/pusher.min.js"></script>
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+	 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> 
+	 <script src="js/jqModal.js"></script>
+	 <script src="js/bute2011.js"></script>	
+	<script src="js/map.js" type="text/javascript"></script>	 
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+      }
+    </style> 
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="#">Charity Cloud</a>
+          <ul class="nav">
+            <li class="active"><a href="#">Home</a></li>
+				<li><a href="#about">Charities</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <div class="hero-unit" style="height:130px">
+        <h1>Cancer Research UK</h1>
+        <p>We are the world's leading charity dedicated to saving lives through research.</p>
+        <p style="font-size:16px">We have saved millions of lives by discovering new ways to prevent, diagnose and treat cancer.</p>
+		  <p><a class="btn primary large jqModal" onclick="donationClicked();"><strong>Make a Donation &raquo;</strong></a> 
+		  <a class="btn primary large">Learn More &raquo;</a></p>
+      </div>
+		
+		 <div class="jqmWindow" id="dialog">
+			<h2 style="margin-bottom:20px;">Donate for Cancer Research UK</h2>
+			<div id="makePaymentStep1">
+				<h3 style="width:90px; float:left">Amount</h3>
+				<input type="text" id="amount" style="width:30px; margin-bottom:20px; float:left"/>
+				<h3 style="float:left; margin-left:5px;">£</h3>
+				<h3 style="width:90px; float:left; clear:left;">Name</h3>
+				<input type="text" id="name" style="width:80px; margin-bottom:20px; float:left"/>
+				<h3 style="width:90px; float:left; clear:left;">Message</h3>
+				<textarea style="float:left;" id="message"></textarea>
+				<p style="clear:both; margin-bottom:10px">&nbsp;</p>
+				<a class="btn primary large jqModal" onclick="processPayment();">Donate &raquo;</a> 
+				<a class="btn primary large jqmClose" style="margin-left:60px;">Close &raquo;</a> 
+			</div>
+			<div id="paymentConfirmationStep1">
+				<div style="margin=left:30px;margin-bottom:10px;"><img src="css/loading.gif"/></div>
+				<div><em>Making payment with BlueVia... </em></div>
+			  </div>
+			  <div id="paymentConfirmationStep2">
+				<div style="margin=left:30px;margin-bottom:10px;"><img src="css/loading.gif"/></div>
+				<div><em>Notifying charity of donation via SMS with BlueVia... </em></div>
+			  </div>
+			  <div id="paymentConfirmationStep3">
+				<div style="margin=left:30px;margin-bottom:10px;"><img src="css/loading.gif"/></div>
+				<div><em>Pushing donation with Pusher... </em></div>
+			</div>
+			<div id="makePaymentStep2">
+				<em>Payment succesfully processed.</em>
+				<h3>Thank you!</h3>
+				<a class="btn primary large jqmClose" style="margin-left:60px;">Close &raquo;</a> 
+			</div>
+		</div>
+
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="span6">
+          <h2>Charity News</h2>
+			  <div id="charityBuzz">
+				<div class="tweet" style="clear:both;display:none;" id="referenceCharityBuzzTweet">
+					<div style="float:left; width:48px;" class="twitter-image">
+						<img width="48" height="48" src="http://a3.twimg.com/profile_images/1543784200/Metro_Avatar_48_optimized_normal.png">
+					</div>
+					<div style="float:left;width:290px; margin-left:2px;" >
+						<div class="twitter-username">
+							<span style="font-weight: bold">Cancer Research UK</span>
+						</div>
+						<div class="twitter-message" style="margin-bottom:10px;">
+							{message}
+							<br/><br/><a class="btn primary medium" onclick="promoteCharity('Anonymous','{message2}')">promote &raquo;</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<p style="clear:both"></p>
+				 <p><a class="btn" href="#">More Tweets &raquo;</a></p>
+			  </div>
+			  <div class="span5">
+				 <h2>Recent Support</h2>
+				 
+				 <div id="donationMessages">
+					 <div id="referenceDonationMessage" class="donation" style="clear:both;display:none">
+						<div style="float:left; width:48px;" class="twitter-image">
+							<img width="48" height="48" src="css/dollar.png">
+						</div>
+						<div style="float:left;width:220px; margin-left:2px;" >
+							<div>
+								<span class="donator-name">
+									<a href=""><span style="font-weight: bold">{name}</span></a>
+								</span >
+								<span> donated £{amount} to </span>
+								<span class="charity">
+									<a href=""><span style="font-weight: bold">{charityName}</span></a>
+								</span >
+							</div>
+							<div style="margin-bottom:10px">
+								<em>{message}</em>
+							</div>
+						</div>
+					</div>
+					
+					 <div id="referenceTweetMessage" class="donation" style="clear:both;display:none">
+						<div style="float:left; width:48px;" class="twitter-image">
+							<img width="48" height="48" src="css/twitter.png">
+						</div>
+						<div style="float:left;width:220px; margin-left:2px;" >
+							<div>
+								<span class="donator-name">
+									<a href=""><span style="font-weight: bold">{name}</span></a>
+								</span >
+								<span> promoted the message of</span>
+								<span class="charity">
+									<a href=""><span style="font-weight: bold">{charityName}</span></a>
+								</span >
+							</div>
+							<div style="margin-bottom:10px">
+								<em>{message}</em>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="donation" style="clear:both;">
+					<div style="float:left; width:48px;" class="twitter-image">
+						<img width="48" height="48" src="css/twitter.png">
+					</div>
+					<div style="float:left;width:220px; margin-left:2px;" >
+						<div>
+							<span class="donator-name">
+								<a href=""><span style="font-weight: bold">afladuck</span></a>
+							</span >
+							<span> promoted </span>
+							<span class="charity">
+								<a href=""><span style="font-weight: bold">Cancer Research UK</span></a>
+							</span >
+							<span>on Twitter</span>
+						</div>
+						<div>
+							<em>Cancer research event is on tomorrow, I'm all in!</em>
+						</div>
+					</div>
+				</div>
+				 
+				  <p style="clear:both;"></p>
+				 <p><a class="btn" href="#">View details &raquo;</a></p>
+			 </div>
+       <div class="span5">
+          <h2>Places & Events</h2>
+          <p>
+			 <div id="map_canvas" style="width:280px;height:280px"></div>
+			 </p>
+        </div>
+      </div>
+
+    </div> <!-- /container -->
+
+  </body>
+</html>
