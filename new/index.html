@@ -1,0 +1,196 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Bootstrap, from Twitter</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+      }
+    </style>
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+    	$(document).ready(function(){
+    		$.get('localhost://gethash.php',function(data){
+    		hash = data;
+    		displayRealTime();
+    		});
+    	});
+    	
+    	
+    	function displayRealTime() {
+			//hash = $('#hash').val();
+			
+			var ws = new WebSocket('ws://websocket.datasift.net/'+hash+'?username=nickhalstead&api_key=347c2581beae30a14ff6c1717b591534');
+			
+			ws.onopen = function(evt) {
+			    // connection event
+			}
+			
+			ws.onmessage = function(evt) {
+			    // parse received message
+			    //console.log(evt.data);
+			    var data = eval('(' + evt.data + ')');
+			    $('#twitter').append(
+			    	'<p>' + 
+			    	data.interaction.content
+			    	+ '</p>'
+			   	);
+			}
+			
+			ws.onclose = function(evt) {
+			    // parse event
+			}
+			
+			// No event object is passed to the event callback, so no useful debugging can be done
+			ws.onerror = function() {
+			    // Some error occured
+			}
+		}
+    	
+    </script>
+	 
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="#">Project name</a>
+          <ul class="nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <div class="hero-unit">
+        <h1>Charity Cloud</h1>
+        <p></p>
+        <p><a class="btn primary large">Learn more &raquo;</a></p>
+      </div>
+
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="span6">
+          <h2>Charity Buzz</h2>
+			  <div id="charityBuzz">
+				<div class="tweet" style="clear:both;">
+					<div style="float:left; width:48px;" class="twitter-image">
+						<img width="48" height="48" src="http://a3.twimg.com/profile_images/1543784200/Metro_Avatar_48_optimized_normal.png">
+					</div>
+					<div style="float:left;width:290px; margin-left:2px;" >
+						<div class="twitter-username">
+							<span style="font-weight: bold">afladuck</span>
+						</div>
+						<div class="twitter-message" style="margin-bottom:10px;">
+							Help fight childhood cancer by donating to Friends of a Feather. Aflac doubles EVERY donation! 
+						</div>
+					</div>
+				</div>
+				<div class="tweet" style="clear:both;">
+					<div style="float:left; width:48px;" class="twitter-image">
+						<img width="48" height="48" src="http://a3.twimg.com/profile_images/1543784200/Metro_Avatar_48_optimized_normal.png">
+					</div>
+					<div style="float:left;width:290px; margin-left:2px;" >
+						<div class="twitter-username">
+							<a href="#"><span style="font-weight: bold">afladuck</span></a>
+						</div>
+						<div class="twitter-message" style="margin-bottom:10px;">
+							Help fight childhood cancer by donating to Friends of a Feather. Aflac doubles EVERY donation! 
+						</div>
+					</div>
+				</div>
+			</div>
+			<p style="clear:both"></p>
+				 <p><a class="btn" href="#">More Tweets &raquo;</a></p>
+			  </div>
+			  <div class="span5">
+				 <h2>Recent Support</h2>
+				 
+				 <div class="donation" style="clear:both;">
+					<div style="float:left; width:48px;" class="twitter-image">
+						<img width="48" height="48" src="css/dollar.png">
+					</div>
+					<div style="float:left;width:220px; margin-left:2px;" >
+						<div>
+							<span class="donator-name">
+								<a href=""><span style="font-weight: bold">afladuck</span></a>
+							</span >
+							<span> donated £15 to </span>
+							<span class="charity">
+								<a href=""><span style="font-weight: bold">Cancer Research UK</span></a>
+							</span >
+						</div>
+						<div style="margin-bottom:10px">
+							<em>Keep up the great work!</em>
+						</div>
+					</div>
+				</div>
+				
+				<div class="donation" style="clear:both;">
+					<div style="float:left; width:48px;" class="twitter-image">
+						<img width="48" height="48" src="css/twitter.png">
+					</div>
+					<div style="float:left;width:220px; margin-left:2px;" >
+						<div>
+							<span class="donator-name">
+								<a href=""><span style="font-weight: bold">afladuck</span></a>
+							</span >
+							<span> promoted </span>
+							<span class="charity">
+								<a href=""><span style="font-weight: bold">Cancer Research UK</span></a>
+							</span >
+							<span>on Twitter</span>
+						</div>
+						<div>
+							<em>Cancer research event is on tomorrow, I'm all in!</em>
+						</div>
+					</div>
+				</div>
+				 
+				  <p style="clear:both;"></p>
+				 <p><a class="btn" href="#">View details &raquo;</a></p>
+			 </div>
+       <div class="span5">
+          <h2>Places & Events</h2>
+          <p>
+			 <iframe width="280" height="280" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=hu&amp;geocode=&amp;q=london+old+street&amp;aq=&amp;sll=37.0625,-95.677068&amp;sspn=44.793449,107.138672&amp;vpsrc=6&amp;ie=UTF8&amp;hq=old+street&amp;hnear=Westminster,+London,+Egyes%C3%BClt+Kir%C3%A1lys%C3%A1g&amp;t=m&amp;fll=51.526755,-0.091753&amp;fspn=0.008317,0.026157&amp;st=103632479276331288175&amp;rq=1&amp;ev=zi&amp;split=1&amp;ll=51.514969,-0.106382&amp;spn=0.008317,0.026157&amp;output=embed"></iframe><br /><small><a href="http://maps.google.com/maps?f=q&amp;source=embed&amp;hl=hu&amp;geocode=&amp;q=london+old+street&amp;aq=&amp;sll=37.0625,-95.677068&amp;sspn=44.793449,107.138672&amp;vpsrc=6&amp;ie=UTF8&amp;hq=old+street&amp;hnear=Westminster,+London,+Egyes%C3%BClt+Kir%C3%A1lys%C3%A1g&amp;t=m&amp;fll=51.526755,-0.091753&amp;fspn=0.008317,0.026157&amp;st=103632479276331288175&amp;rq=1&amp;ev=zi&amp;split=1&amp;ll=51.514969,-0.106382&amp;spn=0.008317,0.026157" style="color:#0000FF;text-align:left">Nagyobb térképre váltás</a></small>
+			 
+			 </p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div>
+      </div>
+
+      <footer>
+        <p>&copy; Company 2011</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+  </body>
+</html>
