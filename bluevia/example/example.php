@@ -1,21 +1,21 @@
 <?php
 
 ### Set DEBUG true to see the http request and reply headers and content
-define('DEBUG',false);
+define('DEBUG',true);
 ### Set the recepient of the SMS
-define('SMS_RECIPIENT',000000000);
+define('SMS_RECIPIENT',447902136056);
 ### Set the country shortcode to get the messages 
 define('SHORTCODE',000000);
 
 ### Set your Zend Framework, pear and php local path
-$oldpath = set_include_path('.:/usr/local/zend/share/ZendFramework/library:/usr/local/zend/share/pear:/usr/share/php');
+$oldpath = set_include_path('.:/home/agoston/pear/share/pear:/usr/local/zend/share/pear:/usr/share/php');
 ### Set your BlueviaClient.php path
 include_once "../src/BlueviaClient.php";
 
 // BlueVia provides two environments to support the different development stages of your app. 
 // Sandbox for testing, and Live for accessing the live network.
 // You can choose which of them to use depending on the API endpoint you need.
-BlueviaClient_Api_Constants::$environment  = BlueviaClient_Api_Constants::ENVIRONMENT_SANDBOX;
+BlueviaClient_Api_Constants::$environment  = BlueviaClient_Api_Constants::ENVIRONMENT_COMMERCIAL;
 
 // PHP SDK wraps any request to BlueVia API's by using a generic object BlueviaClient. 
 // This object uses the Component Pattern to fetch any service required by the developer (oAuth, SMS, Directory or Advertising).
@@ -41,7 +41,7 @@ if ($bv)
 		$sms->addRecipient(SMS_RECIPIENT);
 		// Sets a message element containing the message itself
 		$sms->setMessage('Your message goes here');
-		
+		$result = null;
 		// Send SMS
 		try{							
 			$result = $sms->send();			
@@ -56,7 +56,7 @@ if ($bv)
 		
 		// Retrieve SMS delivery status
 		try {
-			$delivery_status = $sms->getDeliveryStatus($resultado);			
+			$delivery_status = $sms->getDeliveryStatus($result);
 			if (defined('DEBUG') && constant('DEBUG')) {
 				if($delivery_status) var_dump($delivery_status);
 				print "<p style=\"color:blue\"> Request: ".$bv->getLastRequest()."</p>";
